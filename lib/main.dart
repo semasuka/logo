@@ -13,6 +13,7 @@ class Logo extends StatefulWidget {
 }
 
 class _LogoState extends State<Logo> {
+  //TODO: use clean close and main OOP concept
   double progress = 0;
   int count = 0;
   int correctAnswerCount = 0;
@@ -131,6 +132,7 @@ class _LogoState extends State<Logo> {
     ['Société Générale', 'Crédit Mutuel', 'BNP', 'Crédit Agricole'],
     ['scotia', 'RBC', 'TD', 'CIBC'],
   ];
+  //TODO: stop the looping to avoid the error
   List<int> correctAnswer = [
     1,
     0,
@@ -376,7 +378,7 @@ class _LogoState extends State<Logo> {
                   ),
                 ],
               ),
-
+              // progress bar
               RoundedProgressBar(
                 percent: progress,
                 style: RoundedProgressBarStyle(
