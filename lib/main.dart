@@ -113,7 +113,7 @@ class _LogoState extends State<Logo> {
     ['Lacoste', 'Hugo Boss', 'Armani Exchange', 'calvin Klein'],
     ['Kubota', 'Cat', 'john-deere', 'New Holland'],
     ['Nokia', 'Asus', 'ZTE', 'Motorola'],
-    ['Chrome', 'Mozilla', 'Tor', 'Safari'],
+    ['Chrome', 'Firefox', 'Tor', 'Safari'],
     ['AMD', 'Nvidia', 'Micron', 'Gigabyte'],
     ['AirBus', 'Boeing', 'Bombardier', 'Embraer'],
     ['Mistubishi', 'Hyundai', 'Suziki', 'Nissan'],
@@ -130,64 +130,95 @@ class _LogoState extends State<Logo> {
     ['Delta', 'United', 'American Airline', 'Continental'],
     ['Colgate-Palmolive', 'Reliance', 'Larsen and Toubro', 'Dabur'],
     ['Société Générale', 'Crédit Mutuel', 'BNP', 'Crédit Agricole'],
-    ['scotia', 'RBC', 'TD', 'CIBC'],
+    ['Scotiabank', 'RBC', 'TD', 'CIBC'],
   ];
-  //TODO: stop the looping to avoid the error
-  List<int> correctAnswer = [
-    1,
-    0,
-    3,
-    0,
-    0,
-    0,
-    2,
-    3,
-    0,
-    0,
-    1,
-    2,
-    0,
-    2,
-    3,
-    1,
-    3,
-    2,
-    0,
-    2,
-    0,
-    1,
-    0,
-    1,
-    0,
-    1,
-    2,
-    1,
-    0,
-    3,
-    0,
-    2,
-    3,
-    1,
-    2,
-    1,
-    0,
-    1,
-    0,
-    3,
-    0,
-    3,
-    0,
-    1,
-    0,
-    1,
-    0,
-    2,
-    0,
-    3
+  List<String> correctAnswer = [
+    'Apple',
+    'Facebook',
+    'Google',
+    'Microsoft',
+    'Amazon',
+    'Walt-disney',
+    'Toyota',
+    'McDonald',
+    'Dominos',
+    'Nike',
+    'Shell',
+    'Mercedes-Benz',
+    'Audi',
+    'Pespi',
+    'Gucci',
+    'Starbucks',
+    'Netflix',
+    'MasterCard',
+    'Chevrolet',
+    'Wendy\'s',
+    'RedBull',
+    'Paypal',
+    'LG',
+    'Target',
+    'ComCast',
+    'Tommy',
+    'Huawei',
+    'WWF',
+    'General Electric',
+    'Philadelphia Eagles',
+    'Lacoste',
+    'John-deere',
+    'Motorola',
+    'Firefox',
+    'Nvidia',
+    'Boeing',
+    'Mistubishi',
+    'Unilever',
+    'Bentley',
+    'Dove',
+    'Cisco',
+    'Toblerone',
+    'Ubuntu',
+    'Louis vuitton',
+    'Carrefour',
+    'Goodyear',
+    'Michelin',
+    'American Airline',
+    'Colgate-Palmolive',
+    'Crédit Mutuel',
+    'Scotiabank',
   ];
+
+  List randomizedBrand = [];
+  randomization() {
+    for (int i = 0; i < 51; i++) {
+      randomizedBrand.add(multiChoice[i]..shuffle());
+    }
+  }
+
+  createAlertDialog(BuildContext context) {
+    TextEditingController customController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('You are a master'),
+            content: TextField(
+              controller: customController,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('submit'),
+                onPressed: (){
+
+                },
+              )
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
+    randomization();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -210,9 +241,8 @@ class _LogoState extends State<Logo> {
                         color: Colors.amber,
                         size: 100.0,
                       ),
-                      //TODO: center the text after numbers double digit number
                       Positioned(
-                        right: 35,
+                        right: 37,
                         top: 35,
                         child: Text(
                           '$correctAnswerCount',
@@ -261,7 +291,7 @@ class _LogoState extends State<Logo> {
                       height: 50.0,
                       child: RaisedButton(
                         child: Text(
-                          multiChoice[count][0],
+                          randomizedBrand[count][0],
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -275,13 +305,16 @@ class _LogoState extends State<Logo> {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           setState(() {
-                            //TODO: randomize the order
-                            if (correctAnswer[count] == 0) {
+                            if (correctAnswer[count] ==
+                                randomizedBrand[count][0]) {
                               correctAnswerCount++;
+                              createAlertDialog(context);
                             }
                           });
-                          nextQuestion();
-                          progress += 2;
+                          if (count < 50) {
+                            nextQuestion();
+                            progress += 2;
+                          }
                         },
                       ),
                     ),
@@ -293,7 +326,7 @@ class _LogoState extends State<Logo> {
                       height: 50.0,
                       child: RaisedButton(
                         child: Text(
-                          multiChoice[count][1],
+                          randomizedBrand[count][1],
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -307,12 +340,15 @@ class _LogoState extends State<Logo> {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           setState(() {
-                            if (correctAnswer[count] == 1) {
+                            if (correctAnswer[count] ==
+                                randomizedBrand[count][1]) {
                               correctAnswerCount++;
                             }
                           });
-                          nextQuestion();
-                          progress += 2;
+                          if (count < 50) {
+                            nextQuestion();
+                            progress += 2;
+                          }
                         },
                       ),
                     ),
@@ -324,7 +360,7 @@ class _LogoState extends State<Logo> {
                       height: 50.0,
                       child: RaisedButton(
                         child: Text(
-                          multiChoice[count][2],
+                          randomizedBrand[count][2],
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -338,12 +374,15 @@ class _LogoState extends State<Logo> {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           setState(() {
-                            if (correctAnswer[count] == 2) {
+                            if (correctAnswer[count] ==
+                                randomizedBrand[count][2]) {
                               correctAnswerCount++;
                             }
                           });
-                          nextQuestion();
-                          progress += 2;
+                          if (count < 50) {
+                            nextQuestion();
+                            progress += 2;
+                          }
                         },
                       ),
                     ),
@@ -353,7 +392,7 @@ class _LogoState extends State<Logo> {
                     height: 50.0,
                     child: RaisedButton(
                       child: Text(
-                        multiChoice[count][3],
+                        randomizedBrand[count][3],
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -367,12 +406,15 @@ class _LogoState extends State<Logo> {
                       splashColor: Colors.transparent,
                       onPressed: () {
                         setState(() {
-                          if (correctAnswer[count] == 3) {
+                          if (correctAnswer[count] ==
+                              randomizedBrand[count][3]) {
                             correctAnswerCount++;
                           }
                         });
-                        nextQuestion();
-                        progress += 2;
+                        if (count < 50) {
+                          nextQuestion();
+                          progress += 2;
+                        }
                       },
                     ),
                   ),
